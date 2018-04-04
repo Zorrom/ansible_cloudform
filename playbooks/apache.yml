@@ -1,0 +1,10 @@
+---
+- hosts: "{{ ip }}"
+  tasks:
+  - name: Copy a file
+    template:
+      src: /home/ansible_cloudform/myfile.txt
+      dest: /home/rhcmadmin
+      owner: rhcmadmin
+      group: rhcmadmin
+      mode: 0600

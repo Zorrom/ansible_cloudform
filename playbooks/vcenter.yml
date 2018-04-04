@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+
+  tasks:
+  - vsphere_guest:
+     vcenter_hostname: "{{ vcenter_hostname }}"
+     username: "{{ user_name }}"
+     password: "{{ password }}"
+     validate_certs: no
+     guest: catalogvmcf
+     state: powered_on
+  #delegate_to: localhost
+  #register: facts
