@@ -6,7 +6,7 @@
   - name: Deploy guest from template
     vmware_guest:
       hostname: "{{ hostname }}"
-      username: "{{ useername }}"
+      username: "{{ username }}"
       password: "{{ password }}"
       validate_certs: false
       datacenter: "{{ datacenter }}"
