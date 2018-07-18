@@ -1,5 +1,5 @@
 ---
-#- hosts: ip_here 
+- hosts: "{{ host_ip}}"
    #gather_facts: false
   tasks:
     - name: create user
