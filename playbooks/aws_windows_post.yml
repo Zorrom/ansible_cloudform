@@ -1,0 +1,12 @@
+---
+#- hosts: 10.227.6.161 
+   #gather_facts: false
+  tasks:
+    - name: create user
+      win_user:
+        name: "{{ name }}"
+        password: "{{ password }}"
+        state: present
+        update_password: on_create
+        groups:
+          - {{ group }}
