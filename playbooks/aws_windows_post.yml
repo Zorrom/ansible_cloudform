@@ -1,5 +1,5 @@
 ---
-#- hosts: 10.227.6.161 
+#- hosts: ip_here 
    #gather_facts: false
   tasks:
     - name: create user
