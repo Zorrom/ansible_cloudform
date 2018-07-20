@@ -1,0 +1,5 @@
+- hosts: localhost 
+   #gather_facts: false
+  tasks:
+    - name: Create user
+      shell: ansible-playbook /etc/ansible/playbooks/aws_windows_post.yml
