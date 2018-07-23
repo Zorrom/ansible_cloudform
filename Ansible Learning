@@ -1,1 +1,4 @@
 Ansible Documenation
+Agentless - SSh works fine since its Linux and need to check on the WinRM 
+Ansible has encrypted vault for Credentials stroage, can use them across playbooks
+Winrm Still has to be configured manually
