@@ -80,3 +80,12 @@ Order or precedencse
 1) (Group_Vars) All
 2) (Group_Vars) Groupname
 3) (Host_Vars) Hostname
+
+Ansible order configuration precedence
+-----------------------------------------
+1. ~/ansible.cfg
+2. ~/.ansible.cf
+3. etc/ansible/ansible.cfg
+
+Ansible forks are the number of parallel process that Ansible can execute - By default its 5
+For production its recommended to have 20 parallen process and then go up or down depending on the system performance
