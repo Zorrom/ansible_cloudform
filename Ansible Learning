@@ -10,7 +10,64 @@ Intallin ansible
 -----------------
 Yum install epel-repo ansible -y
 
+Ansible getting help
+----------------------
+ansible-doc -l
+Find specific module help page
+ansible-doc module    eg: ansible-doc service
+
+24-Jul-2018
+
 Ansible command module
 ----------------------
 $ ansible all -i inventory -u root -m ping -k
 $ ansible all -i inventory -u root -m command -a 'uname -a' -k
+4 ansile all -i inventory -u root -m service -a 'name=httpd state=started' -k
+
+SSH-Keygen
+-------------
+[root@centos-cantrol demo1]# ssh-keygen                                                                          
+Generating public/private rsa key pair.                                                                          
+Enter file in which to save the key (/root/.ssh/id_rsa):                                                         
+Enter passphrase (empty for no passphrase):                                                                      
+Enter same passphrase again:                                                                                     
+Your identification has been saved in /root/.ssh/id_rsa.                                                         
+Your public key has been saved in /root/.ssh/id_rsa.pub.                                                         
+The key fingerprint is:                                                                                          
+SHA256:M/kVEy4H4YltmF6Coa5qPPzhn7hhY1YujlpxijKJDbE root@centos-cantrol                                           
+The key's randomart image is:                                                                                    
++---[RSA 2048]----+                                                                                              
+|      .   o..    |                                                                                              
+|     . o * + .   |                                                                                              
+|.   . . = B =    |                                                                                              
+| o .   . = o o   |                                                                                              
+|E . o.  S   .    |                                                                                              
+|.= =o    + .     |                                                                                              
+|O =O .    .      |                                                                                              
+|.OB * .          |                                                                                              
+|=.o*oo           |                                                                                              
++----[SHA256]-----+                                                                                              
+[root@centos-cantrol demo1]# cat inventory                                                                       
+172.31.0.110                                                                                                     
+172.31.0.120                                                                                                     
+[root@centos-cantrol demo1]# ssh-copy-id 172.31.0.110                                                            
+/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/root/.ssh/id_rsa.pub"                                
+/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed   
+/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys 
+root@172.31.0.110's password:                                                                                    
+                                                                                                                 
+Number of key(s) added: 1                                                                                        
+                                                                                                                 
+Now try logging into the machine, with:   "ssh '172.31.0.110'"                                                   
+and check to make sure that only the key(s) you wanted were added.                                               
+                                                                                                                 
+[root@centos-cantrol demo1]# ssh-copy-id 172.31.0.120                                                            
+/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/root/.ssh/id_rsa.pub"                                
+/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed   
+/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys 
+root@172.31.0.120's password:                                                                                    
+                                                                                                                 
+Number of key(s) added: 1                                                                                        
+                                                                                                                 
+Now try logging into the machine, with:   "ssh '172.31.0.120'"                                                   
+and check to make sure that only the key(s) you wanted were added.                                               
