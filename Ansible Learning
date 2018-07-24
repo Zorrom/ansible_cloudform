@@ -1,4 +1,16 @@
 Ansible Documenation
-Agentless - SSh works fine since its Linux and need to check on the WinRM 
+Agentless - SSH works fine since its Linux and need to check on the WinRM 
 Ansible has encrypted vault for Credentials stroage, can use them across playbooks
 Winrm Still has to be configured manually
+
+Variables - Define the authentication once inside the hosts and use them on all playbooks by matching the host groups
+Inventory - By default uses /etc/ansible/hosts or else we can use customer inventory for Ansible to understand
+
+Intallin ansible
+-----------------
+Yum install epel-repo ansible -y
+
+Ansible command module
+----------------------
+$ ansible all -i inventory -u root -m ping -k
+$ ansible all -i inventory -u root -m command -a 'uname -a' -k
