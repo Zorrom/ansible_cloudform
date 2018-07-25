@@ -25,7 +25,8 @@ ansible -i inventory web -m setup -a "filter=ansible_all_ipv4_addresses"  - Filt
 ansible -i inventory web -m setup -a "filter=ansible_mounts"  - Filter only specific facts
 ansible -i inventory all -m setup --tree ./fact    - Gather facts for all the machines and store it in the fact directory
 
----
+Example Playbooks
+-----------------
 - hosts: localhost
   sudo: yes
   tasks:
@@ -42,3 +43,26 @@ ansible -i inventory all -m setup --tree ./fact    - Gather facts for all the ma
     yum: name=httpd state=present
   - name: Start Apache Service
     service: name=httpd state=started
+    
+Playbook 1 
+-----------
+---
+- hosts: web
+  sudo: yes
+  tasks:
+  - name: Install Apache Packages
+    yum: name=httpd state=present
+  - name: Start Apache Service
+    service: name=httpd state=started
+- hosts: db
+  sudo: yes
+  tasks:
+  - name: Install Mariadb Packages
+    yum: name=mariadb-server state=present
+  - name: Start MariDB Service
+    service: name=mariadb state=started
+- hosts: web:db
+  sudo: yes
+  tasks:
+  - name: Stop the Firewall
+    service: name=firewalld state=stopped enabled=False
