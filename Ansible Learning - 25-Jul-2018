@@ -1,0 +1,12 @@
+Ansible Learning - 25-Jul-2018
+
+Groups in Ansible 
+-----------------
+Or Group  - (group1:group2)
+Not group - (!group2)
+Wildcard  - (web*.ex.com)
+Regex     - (~web[0-9]+)
+Complex pattern - (group1:&group2) - Pick the terms or IP common between both groups
+                - web:prod:!python3 - Hosts common in web and prod but are not common in Python3
+
+
