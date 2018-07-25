@@ -10,3 +10,10 @@ Complex pattern - (group1:&group2) - Pick the terms or IP common between both gr
                 - web:prod:!python3 - Hosts common in web and prod but are not common in Python3
 
 
+Yaml file whitespace
+----------------------
+Start with 3 dashes and it becomes yaml
+
+hosts: host   - global
+user:root     - global
+tasks:        - global 
