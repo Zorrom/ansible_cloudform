@@ -14,6 +14,31 @@ Yaml file whitespace
 ----------------------
 Start with 3 dashes and it becomes yaml
 
-hosts: host   - global
-user:root     - global
-tasks:        - global 
+hosts: host   - global play declaration
+user:root     - global play declaration
+tasks:        - global play declaration
+
+Gather facts on target machines
+--------------------------------
+ansible -i inventory web -m setup     
+ansible -i inventory web -m setup -a "filter=ansible_all_ipv4_addresses"  - Filter only specific facts
+ansible -i inventory web -m setup -a "filter=ansible_mounts"  - Filter only specific facts
+ansible -i inventory all -m setup --tree ./fact    - Gather facts for all the machines and store it in the fact directory
+
+---
+- hosts: localhost
+  sudo: yes
+  tasks:
+  - name: add hosts
+    add_host:
+      name: "172.31.0.120"
+      groups: web
+      ansible_ssh_user: root
+      ansible_ssh_pass: redhat
+- hosts: web
+  sudo: yes
+  tasks:
+  - name: Install Apache Packages
+    yum: name=httpd state=present
+  - name: Start Apache Service
+    service: name=httpd state=started
