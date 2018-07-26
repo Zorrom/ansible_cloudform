@@ -124,3 +124,10 @@ Playbook examples
   handlers:
   - name: Restart Apache
     service: name=httpd state=restarted
+    
+    
+    Roles
+    ----------------------
+    site.yml 
+    ---
+    
