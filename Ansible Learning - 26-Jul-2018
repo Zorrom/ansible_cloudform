@@ -4,6 +4,8 @@
 #Update 3: Introducing handlers
 #Update 4: Introduing Variables supplied for templates folder
 #Update 5: Create Document root Directory &
+#Update 6: Deploy info.j2 new dynamic webpage
+#Update 8: Introducing META to Flush Handlers by Force
 - hosts: web
   sudo: yes
   vars:
@@ -24,12 +26,16 @@
     template: src=templates/httpd.j2 dest=/etc/httpd/conf/httpd.conf
     notify:
       - Restart Apache
+  - name: Meta Force to flush handlers
+    meta: flush_handlers
   - name: Create doc directory Location
     file: path={{ doc_root }} state=directory
   - name: Deploy Sample Sites files
     template: src=templates/index.j2 dest={{ doc_root }}/index.html
-    notify:
-      - Restart Apache
+    #notify:
+    #  - Restart Apache
+  - name: Deploy sample sites
+    template: src=templates/info.j2 dest={{ doc_root }}/info.html
   handlers:
   - name: Restart Apache
     service: name=httpd state=restarted
@@ -49,7 +55,6 @@
   tasks:
   - name: Stop the Firewall
     service: name=firewalld state=stopped enabled=False
-
 
 ###########################################################
 Templates folder has three files
