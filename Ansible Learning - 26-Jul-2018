@@ -65,3 +65,62 @@ Automation Baby <3 bla bla
 Host IP address: {{ansible_all_ipv4_addresses}}
 Host OS Family: {{ansible_os_family}}
 Document Root: {{ doc_root }}
+
+
+
+
+
+Playbook examples
+---------------------
+---
+#Update 1: When class
+#Update 2: Introducing templates
+#Update 3: Introducing handlers
+#Update 4: Introduing Variables supplied for templates folder
+#Update 5: Create Document root Directory &
+#Update 6: Deploy info.j2 new dynamic webpage
+#Update 8: Introducing META to Flush Handlers by Force
+#Update 9: Adding register and checking failed or true
+- hosts: web
+  sudo: yes
+  vars:
+    http_port: 80
+    doc_root: /var/www/html/ansible_test
+    doc_dir: /azhar/
+  vars_prompt:
+  - name: Username
+    prompt: What is your name
+
+  tasks:
+  - name: Install Apache Packages on RedHat nodes
+    yum: name=httpd state=present
+    when: ansible_os_family == "RedHat"
+  - name: Install Apache Packages on RedHat nodes
+    apt: name=httpd state=present
+    when: ansible_os_family == "debian"
+  - name: Start Apache Service
+    service: name=httpd state=started
+    #ignore_errors: yes
+  - name: Checking doc_root already available
+    command: ls {{ doc_root }}
+    register: result1
+    ignore_errors: yes
+  - name: Create doc directory Location
+    file: path={{ doc_root }} state=directory
+    when: result1|failed
+  - name: Deploy Custom apache configuration
+    template: src=templates/httpd.j2 dest=/etc/httpd/conf/httpd.conf
+    notify:
+      - Restart Apache
+  - name: Meta Force to flush handlers
+    meta: flush_handlers
+
+  - name: Deploy Sample Sites files
+    template: src=templates/index.j2 dest={{ doc_root }}/index.html
+    #notify:
+    #  - Restart Apache
+  - name: Deploy sample sites
+    template: src=templates/info.j2 dest={{ doc_root }}/info.html
+  handlers:
+  - name: Restart Apache
+    service: name=httpd state=restarted
