@@ -1,0 +1,30 @@
+---
+- name: Install Apache Packages on RedHat nodes
+  yum: name=httpd state=present
+  when: ansible_os_family == "RedHat"
+- name: Install Apache Packages on RedHat nodes
+  apt: name=httpd state=present
+  when: ansible_os_family == "debian"
+- name: Start Apache Service
+  service: name=httpd state=started
+  #ignore_errors: yes
+- name: Checking doc_root already available
+  command: ls {{ doc_root }}
+  register: result1
+  ignore_errors: yes
+- debug: msg="Unable to find doc root"
+  when: result1|failed
+- name: Create doc directory Location         
+  file: path={{ doc_root }} state=directory
+  when: result1|failed
+- name: Deploy Custom apache configuration
+  template: src=templates/httpd.j2 dest=/etc/httpd/conf/httpd.conf
+  notify:
+    - Restart Apache
+
+- name: Deploy Sample Sites files
+  template: src=templates/index.j2 dest={{ doc_root }}/index.html
+  #notify: 
+  #  - Restart Apache
+- name: Deploy sample sites 
+  template: src=templates/info.j2 dest={{ doc_root }}/info.html
