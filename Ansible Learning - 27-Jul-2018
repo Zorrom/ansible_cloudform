@@ -1,0 +1,22 @@
+Tags in Ansible
+---------------
+
+- include: webserver.yml
+  tags: web
+- include: dbserver.yml
+  tags: db
+  
+Then run the following command to only run the respective tagged playbooks
+anisble-playbook web --tags web site.yml   # This will only run the tasks with the respective web tags added to it
+  
+Ansible Galaxy
+--------------
+Download
+Share
+Review
+
+Installing Galaxy roles
+---------
+ansible-galaxy install username.role
+Downloading a role from the ansible galaxy 
+ansible-galaxy install username.docker  # These commands are available on the ansible galaxy itself
