@@ -35,3 +35,11 @@ Then set password in inventory for the following
 admin_password='' - Password for login
 pg_password=''    - Password for postgresql
 rabbitmq_passwords='' - Password for rabbitmq message queue
+
+Ansible user addition in webui
+----------------------------
+settings->user-add
+
+user type -> Normal user -> Only view
+             System audit -> Who can only use 
+             System Administrator -> 
