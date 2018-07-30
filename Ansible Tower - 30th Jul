@@ -30,3 +30,8 @@ Run jobs on a weekly/monthly/yearly basis
 
 Ansible installation
 --------------------
+Installed from the setup directory from Amit github
+Then set password in inventory for the following
+admin_password='' - Password for login
+pg_password=''    - Password for postgresql
+rabbitmq_passwords='' - Password for rabbitmq message queue
