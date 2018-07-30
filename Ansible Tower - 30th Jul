@@ -1,0 +1,32 @@
+Tower is graphically enabled framework
+Cloud and Autoscaling flexibility
+Enhanced and simplified role based access Control and Auditing
+Real time playbook output
+
+Key Advantage
+-------------
+Web based UI
+Cloud Integration
+Compliance - Report and auditing
+RBAC
+REST API
+Monitoring - Send out Alarm. Email etc. If a job fails or a config is found
+Job Scheduling
+Integrates with LDAP, AD and IDM
+Multi organization seperation of access rights
+
+Availability
+-----------
+Available in RHEL7-server-extra-rpms repository
+Current version 3.2.1
+
+Use cases
+---------
+Automated application  and service deployment
+Automate add/removal of customers in IT environment
+Automated patching of servers
+Rolling out updates in IT environment
+Run jobs on a weekly/monthly/yearly basis
+
+Ansible installation
+--------------------
