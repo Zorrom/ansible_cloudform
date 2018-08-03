@@ -1,0 +1,5 @@
+---
+http_port: 80
+doc_root: /var/www/html/ansible_test
+doc_dir: /azhar/
+Username: "Zorrom"

@@ -1,0 +1,4 @@
+---
+- include: common-user.yml
+- include: firewall.yml
+- include: ntp.yml

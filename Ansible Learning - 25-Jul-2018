@@ -1,0 +1,68 @@
+Ansible Learning - 25-Jul-2018
+
+Groups in Ansible 
+-----------------
+Or Group  - (group1:group2)
+Not group - (!group2)
+Wildcard  - (web*.ex.com)
+Regex     - (~web[0-9]+)
+Complex pattern - (group1:&group2) - Pick the terms or IP common between both groups
+                - web:prod:!python3 - Hosts common in web and prod but are not common in Python3
+
+
+Yaml file whitespace
+----------------------
+Start with 3 dashes and it becomes yaml
+
+hosts: host   - global play declaration
+user:root     - global play declaration
+tasks:        - global play declaration
+
+Gather facts on target machines
+--------------------------------
+ansible -i inventory web -m setup     
+ansible -i inventory web -m setup -a "filter=ansible_all_ipv4_addresses"  - Filter only specific facts
+ansible -i inventory web -m setup -a "filter=ansible_mounts"  - Filter only specific facts
+ansible -i inventory all -m setup --tree ./fact    - Gather facts for all the machines and store it in the fact directory
+
+Example Playbooks
+-----------------
+- hosts: localhost
+  sudo: yes
+  tasks:
+  - name: add hosts
+    add_host:
+      name: "172.31.0.120"
+      groups: web
+      ansible_ssh_user: root
+      ansible_ssh_pass: redhat
+- hosts: web
+  sudo: yes
+  tasks:
+  - name: Install Apache Packages
+    yum: name=httpd state=present
+  - name: Start Apache Service
+    service: name=httpd state=started
+    
+Playbook 1 
+-----------
+  ---
+  - hosts: web
+    sudo: yes
+    tasks:
+    - name: Install Apache Packages
+      yum: name=httpd state=present
+    - name: Start Apache Service
+      service: name=httpd state=started
+  - hosts: db
+    sudo: yes
+    tasks:
+    - name: Install Mariadb Packages
+      yum: name=mariadb-server state=present
+    - name: Start MariDB Service
+      service: name=mariadb state=started
+  - hosts: web:db
+    sudo: yes
+    tasks:
+    - name: Stop the Firewall
+      service: name=firewalld state=stopped enabled=False
