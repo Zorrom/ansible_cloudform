@@ -45,4 +45,6 @@
   - name: Create file
     file: path=/tmp/file.txt state=touch
   - name: Create user
-    user: name= "{{ username }}" state=present
+    user: 
+      name: "{{ username }}" 
+      state: present
