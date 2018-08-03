@@ -1,6 +1,5 @@
 ---
 - hosts: "{{ host_ip}}"
-  connection: winrm
    #gather_facts: false
   tasks:
     - name: create user
@@ -8,6 +7,5 @@
         name: "{{ name }}"
         password: "{{ password }}"
         state: present
-        update_password: on_create
         groups:
           - "{{ group }}"
