@@ -42,9 +42,30 @@
   become: True
   gather_facts: True
   tasks:
-  - name: Create file
-    file: path=/tmp/file.txt state=touch
-  - name: Create user
-    user: 
-      name: "{{ username }}" 
+  - name: create group
+    group:
+      name: ctste
       state: present
+  - name: Add sudoers entry for group
+    lineinfile:
+      path: /etc/sudoers
+      state: present
+      regexp: '^%ctste'
+      line: '%ctste ALL=(ALL) NOPASSWD:ALL'
+      validate: '/usr/sbin/visudo -cf %s'
+  - name: Create user
+    user:
+      name: "{{ username }}"
+      password: hacGs6GsDNdDY
+      groups: ctste
+      state: present
+  - name: Set Password Authentication
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      state: present
+      regexp: '^PasswordAuthentication'
+      line: 'PasswordAuthentication yes'
+  - name: Restarting sshd sevice
+    service:
+      name: sshd
+      state: restarted
