@@ -8,6 +8,7 @@
          aws_secret_key: "{{ aws_secret_key }}"
          key_name: "{{ key_name }}"
          instance_type: "{{ instance_type }}"
+         instance_profile_name: "{{ instance_profile_name }}"
          image: "{{ image }}"
          wait: yes
          wait_timeout: 500
@@ -46,3 +47,13 @@
       state: present
       groups:
         - "{{ windows_group }}"
+  - name: Adding to domain
+    win_domain_membership:
+      dns_domain_name: "{{ domain_name }}"
+      domain_admin_user: "{{ domain_user }}"
+      domain_admin_password: "{{ domain_password }}"
+      state: domain
+    register: domain_state
+  - name: Reboot vm
+    win_reboot:
+    when: domain_state.reboot_required
