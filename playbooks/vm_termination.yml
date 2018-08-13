@@ -1,3 +1,4 @@
+---
 - name: Vm Termination
   hosts: localhost
   connection: local
