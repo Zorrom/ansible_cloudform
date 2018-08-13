@@ -1,0 +1,13 @@
+- name: Vm Termination
+  hosts: localhost
+  connection: local
+  gather_facts: True
+  tasks:
+  - name: Terminating the instance
+    ec2:
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
+      instance_ids: "{{ instance_ids }}" 
+      region:  "{{ region }}"
+      state: "{{ state }}"
+
