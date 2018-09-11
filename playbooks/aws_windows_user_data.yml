@@ -57,3 +57,15 @@
   - name: Reboot vm
     win_reboot:
     when: domain_state.reboot_required
+- name: Chef bootstrap phase
+  hosts: localhost
+  gather_facts: true
+  tasks:
+  - name: Print ip
+    debug:
+      msg: Print "{{ item.private_ip }}"
+    with_items: "{{ ec2.instances }}"
+  - name: Bootstrap
+    shell: >
+      cd /home/chef/ && knife bootstrap windows winrm -y {{ item.private_ip }} -x "{{ domain_user }}" -P "{{ domain_password }}" -N {{ item.tags.Name }}
+    with_items: "{{ ec2.instances }}"
