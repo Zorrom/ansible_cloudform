@@ -61,6 +61,9 @@
   - name: Reboot vm
     win_reboot:
     when: domain_state.reboot_required
+  - name: Pause the script
+    pause:
+      minutes: 2
 - name: Chef bootstrap phase
   hosts: localhost
   gather_facts: true
