@@ -84,7 +84,7 @@
     with_items: "{{ ec2.instances }}"
   - name: Bootstrap
     shell: >
-      cat /home/chef/worker.txt
+      touch /home/chef/worker.txt
   - name: Bootstrap
     shell: >
       cd /home/chef/ && knife bootstrap -y {{ item.private_ip }} --sudo -x centos -i centos.pem -N {{ item.tags.Name }}
