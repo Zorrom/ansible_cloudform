@@ -84,5 +84,5 @@
     with_items: "{{ ec2.instances }}"
   - name: Bootstrap
     shell: >
-      cd /home/chef/ && knife bootstrap -y {{ item.private_ip }} --sudo -x centos -i /home/chef/centos.pem -N {{ item.tags.Name }}
+      cd /home/chef/ && knife bootstrap -y {{ item.private_ip }} --sudo -x centos -i /etc/ansible/playbooks/group_vars/centos.pem -N {{ item.tags.Name }}
     with_items: "{{ ec2.instances }}"
