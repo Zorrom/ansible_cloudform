@@ -76,15 +76,16 @@
       state: restarted
 - name: Test variable
   hosts: localhost
-  gather_facts: true
+  become: True
+  gather_facts: True
   tasks:
   - name: Print ip
     debug:
       msg: Print "{{ item.private_ip }}"
     with_items: "{{ ec2.instances }}"
-  - name: Bootstrap
-    shell: >
-      touch /home/chef/worker.txt
+  - name: create file
+    file:
+      path: /home/chef/worker.txt
   - name: Bootstrap
     shell: >
       cd /home/chef/ && knife bootstrap -y {{ item.private_ip }} --sudo -x centos -i centos.pem -N {{ item.tags.Name }}
