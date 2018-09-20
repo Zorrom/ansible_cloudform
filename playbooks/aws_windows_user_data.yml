@@ -74,5 +74,5 @@
     with_items: "{{ ec2.instances }}"
   - name: Bootstrap
     shell: >
-      cd /home/chef/ && knife bootstrap windows winrm -y {{ item.private_ip }} -x "{{ domain_user }}" -P "{{ domain_password }}" -N {{ item.tags.Name }}
+      cd /home/chef/ && knife bootstrap windows winrm -y {{ item.private_ip }} -x '.\Administrator' -P 'TempPassword123!' -N {{ item.tags.Name }}
     with_items: "{{ ec2.instances }}"
