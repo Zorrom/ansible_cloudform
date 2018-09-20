@@ -1,0 +1,88 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: True
+  tasks:
+    - name: Provision an instance
+      ec2:
+         aws_access_key: "{{ aws_access_key }}"
+         aws_secret_key: "{{ aws_secret_key }}"
+         key_name: "{{ key_name }}"
+         instance_type: "{{ instance_type }}"
+         instance_profile_name: "{{ instance_profile_name }}"
+         image: "{{ image }}"
+         wait: yes
+         wait_timeout: 500
+         vpc_subnet_id: "{{ vpc_subnet_id }}"
+         group_id: "{{ group_id }}"
+         #assign_public_ip: yes
+         #count: 1
+         #count_tag:  "{{ count_tag }}"
+         instance_tags: 
+            Name: "{{ instance_tags }}"
+         region: "{{ region }}"
+      register: ec2
+   
+    - name: Add new instance to host group
+      add_host:
+        hostname: "{{ item.private_ip }}"
+        groupname: prlinux
+      with_items: "{{ ec2.instances }}"
+
+    - name: Wait for SSH to come up
+      wait_for:
+        host: "{{ item.private_ip }}"
+        port: 22
+        delay: 60
+        timeout: 320
+        state: started
+      with_items: "{{ ec2.instances }}"
+
+- name: Post tasks 
+  hosts: prlinux
+  become: True
+  gather_facts: True
+  tasks:
+  - name: create group
+    group:
+      name: ctste
+      state: present
+  - name: Add sudoers entry for group
+    lineinfile:
+      path: /etc/sudoers
+      state: present
+      regexp: '^%ctste'
+      line: '%ctste ALL=(ALL) NOPASSWD:ALL'
+      validate: '/usr/sbin/visudo -cf %s'
+  - name: Create user
+    user:
+      name: "{{ username }}"
+      password: hacGs6GsDNdDY
+      groups: ctste
+      state: present
+  - name: Set Password Authentication
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      state: present
+      regexp: '^PasswordAuthentication'
+      line: 'PasswordAuthentication yes'
+  - name: Add chef host entry
+    lineinfile:
+      path: /etc/hosts
+      line: '10.227.70.220 spaapp007'
+  - name: Restarting sshd sevice
+    service:
+      name: sshd
+      state: restarted
+- name: Test variable
+  hosts: localhost
+  gather_facts: True
+  tasks:
+  - name: Print ip
+    debug:
+      msg: Print "{{ item.private_ip }}"
+    with_items: "{{ ec2.instances }}"
+  - name: Bootstrap
+    shell: >
+      cd /home/chef/ && knife bootstrap -y {{ item.private_ip }} --sudo -x ec2-user -i pr.pem -N {{ item.tags.Name }}
+    with_items: "{{ ec2.instances }}"
