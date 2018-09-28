@@ -6,6 +6,7 @@
     - name: Test
       file:
         path: /tmp/test.txt
+        state: touch
     - name: Provision an instance
       ec2:
          aws_access_key: "{{ aws_access_key }}"
