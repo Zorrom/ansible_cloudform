@@ -5,7 +5,7 @@
   tasks:
     - name: Test
       file:
-        path: /etc/ansible/playbooks/myfile.txt
+        path: /tmp/hello.txt
         state: touch
     - name: Provision an instance
       ec2:
