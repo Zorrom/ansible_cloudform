@@ -3,6 +3,9 @@
   connection: local
   gather_facts: True
   tasks:
+    - name: Test
+      file:
+        path: /tmp/test.txt
     - name: Provision an instance
       ec2:
          aws_access_key: "{{ aws_access_key }}"
@@ -27,6 +30,8 @@
       add_host:
         hostname: "{{ item.private_ip }}"
         groupname: prlinux
+        ansible_ssh_user: ec2-user
+        ansible_ssh_private_key_file: /home/chef/prpah.pem
       with_items: "{{ ec2.instances }}"
 
     - name: Wait for SSH to come up
