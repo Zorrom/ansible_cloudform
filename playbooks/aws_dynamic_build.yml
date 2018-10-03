@@ -15,9 +15,9 @@
          wait_timeout: 500
          vpc_subnet_id: "{{ vpc_subnet_id }}"
          group_id: "{{ group_id }}"
-         assign_public_ip: yes
-         count: 1
-         count_tag:  "{{ count_tag }}"
+         #assign_public_ip: yes
+         #count: 1
+         #count_tag:  "{{ count_tag }}"
          instance_tags: 
             Name: "{{ instance_tags }}"
          region: "{{ region }}"
